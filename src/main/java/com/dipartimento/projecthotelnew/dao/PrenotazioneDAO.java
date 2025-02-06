@@ -9,9 +9,6 @@ public interface PrenotazioneDAO {
 
     Prenotazione getPrenotazioneById(Integer id);
 
-
-
-    // 2. Ottieni tutte le prenotazion
     List<PrenotazioneDettaglioResponse> getAllPrenotazioniConDettagli();
 
     void savePrenotazione(Prenotazione prenotazione);

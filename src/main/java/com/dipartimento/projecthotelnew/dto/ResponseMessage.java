@@ -1,6 +1,6 @@
 package com.dipartimento.projecthotelnew.dto;
 
-// ResponseMessage.java
+
 public class ResponseMessage {
     private String message;
 

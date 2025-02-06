@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 
 public class Recensione {
 
-    private int id;     // ID dell'utente che ha lasciato la recensione
+    private int id;
     private int userId;
     private String nomeUtente;
-    private String commento;     // Il testo della recensione
+    private String commento;
 
 
     // Getters and Setters

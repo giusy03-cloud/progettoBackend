@@ -34,19 +34,23 @@ public class UserDAOImpl implements UserDAO{
 
     @Override
     public void deleteById(int id) {
-        String sql = "DELETE FROM users WHERE id = ?";
-        jdbcTemplate.update(sql, id);
+        try {
+            String sql = "DELETE FROM users WHERE id = ?";
+            jdbcTemplate.update(sql, id);
+        } catch (Exception e) {
+            System.err.println("Errore durante l'eliminazione dell'utente con ID: " + id);
+            e.printStackTrace(); // Puoi usare anche un logger per registrare l'errore
+            throw new RuntimeException("Errore durante l'eliminazione dell'utente", e);
+        }
     }
+
 
     @Override
     public User findByUsername(String username) {
-        System.out.println("Cercando utente con nome: " + username); // Aggiungi questo log
         String sql = "SELECT * FROM users WHERE username = ?";
         try {
             return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), username);
         } catch (Exception e) {
-            // Log dell'errore per capire meglio cosa sta succedendo
-            System.out.println("Errore nella ricerca dell'utente: " + e.getMessage());
             return null; // Nessun utente trovato
         }
     }

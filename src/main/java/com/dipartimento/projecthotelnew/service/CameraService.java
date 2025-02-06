@@ -11,7 +11,7 @@ import java.util.List;
 public class CameraService {
 
     @Autowired
-    private CameraDAO cameraDAO;  // O CameraRepository se usi Spring Data JPA
+    private CameraDAO cameraDAO;
 
     public List<Camera> getAllCamere() {
         return cameraDAO.getAllCamere();
@@ -25,7 +25,7 @@ public class CameraService {
         Camera camera = cameraDAO.getCameraById(cameraId);
         if (camera != null) {
             camera.setDisponibilita(disponibilita);
-            cameraDAO.saveCamera(camera);  // Salva la camera con la disponibilità aggiornata
+            cameraDAO.saveCamera(camera);
             return true;
         }
         return false;
@@ -34,15 +34,15 @@ public class CameraService {
     public boolean prenotaCamera(Integer cameraId) {
         Camera camera = cameraDAO.getCameraById(cameraId);
         if (camera != null && camera.isDisponibilita()) {
-            camera.setDisponibilita(false);  // Imposta la camera come prenotata
-            cameraDAO.saveCamera(camera);  // Salva lo stato aggiornato
+            camera.setDisponibilita(false);
+            cameraDAO.saveCamera(camera);
             return true;
         }
         return false;
     }
     public boolean resetDisponibilita(Integer cameraId, Boolean disponibilita) {
-        // Chiamata al metodo nel DAO per aggiornare la disponibilità di una specifica camera
-        return cameraDAO.updateDisponibilita(cameraId, disponibilita);  // Passa i parametri necessari
+
+        return cameraDAO.updateDisponibilita(cameraId, disponibilita);
     }
 
     public void saveCamera(Camera camera){

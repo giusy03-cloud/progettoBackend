@@ -3,7 +3,7 @@ package com.dipartimento.projecthotelnew.model;
 
 public class Prenotazione {
 
-    private Integer id;  // ID della prenotazione
+    private Integer id;
 
     private Integer userId;
     private Integer cameraId;

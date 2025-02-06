@@ -44,13 +44,12 @@ public class CameraController {
     }
 
 
-    // Controller Prenotazione
     @PostMapping("/prenota")
     public ResponseEntity<String> prenotaCamera(@RequestBody Prenotazione prenotazione) {
         Camera camera = cameraService.getCameraById(prenotazione.getCameraId());
         if (camera != null && camera.isDisponibilita()) {
-            camera.setDisponibilita(false);  // Imposta la disponibilità su false
-            cameraService.saveCamera(camera);  // Salva la camera con disponibilità aggiornata
+            camera.setDisponibilita(false);
+            cameraService.saveCamera(camera);
             return ResponseEntity.ok("Prenotazione riuscita");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Camera non disponibile");

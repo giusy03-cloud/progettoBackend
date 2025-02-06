@@ -34,25 +34,22 @@ public class UserController {
     public ResponseEntity<?> loginUser(@RequestBody User user, HttpSession session) {
         User foundUser = userService.findByUsername(user.getUsername());
 
-        // Se l'utente non esiste
         if (foundUser == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new LoginResponse("Utente non trovato", null, null, null));
         }
 
-        // Se la password è errata
+
         if (!user.getPassword().equals(foundUser.getPassword())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new LoginResponse("Password errata", null, null, null));
         }
 
-        // Salva l'utente nella sessione
         session.setAttribute("user", foundUser);
 
-        // ⚠️ Controlla che il ruolo non sia NULL
+
         String role = (foundUser.getRole() != null) ? foundUser.getRole() : "user";
 
-        // ✅ Restituisci anche `userId`
         return ResponseEntity.ok(new LoginResponse(
                 "Login effettuato con successo",
                 foundUser.getUsername(),
@@ -92,13 +89,11 @@ public class UserController {
 
     @PostMapping("/logout")
     public ResponseEntity<LogoutResponse> logout(HttpSession session) {
-        // Invalidare la sessione
+
         session.invalidate();
 
-        // Creare la risposta con il messaggio di successo
         LogoutResponse logoutResponse = new LogoutResponse("Logout effettuato con successo");
 
-        // Restituire la risposta con stato OK e il messaggio
         return ResponseEntity.ok(logoutResponse);
     }
 

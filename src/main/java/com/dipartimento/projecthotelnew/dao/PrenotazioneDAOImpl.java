@@ -39,33 +39,28 @@ public class PrenotazioneDAOImpl implements PrenotazioneDAO {
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(PrenotazioneDettaglioResponse.class));
     }
 
-    // Metodo per salvare la prenotazione
+
     @Transactional
     @Override
     public void savePrenotazione(Prenotazione prenotazione) {
         String sql = "INSERT INTO prenotazioni (userId, cameraId, nomeUtente) VALUES (?, ?, ?)";
         jdbcTemplate.update(sql, prenotazione.getUserId(), prenotazione.getCameraId(), prenotazione.getNomeUtente());
 
-        // Aggiorna la disponibilità della camera (stesso metodo della prenotazione)
         String sqlUpdateCamera = "UPDATE camere SET disponibilita = false WHERE id = ?";
         jdbcTemplate.update(sqlUpdateCamera, prenotazione.getCameraId());
 
 
     }
 
-    // Metodo per eliminare una prenotazione
     @Transactional
     @Override
     public void deletePrenotazione(Integer id) {
-        // Ottieni il cameraId prima di eliminare la prenotazione
         String sqlSelectCamera = "SELECT cameraId FROM prenotazioni WHERE id = ?";
         Integer cameraId = jdbcTemplate.queryForObject(sqlSelectCamera, Integer.class, id);
 
-        // Elimina la prenotazione
         String sqlDelete = "DELETE FROM prenotazioni WHERE id = ?";
         jdbcTemplate.update(sqlDelete, id);
 
-        // Ripristina la disponibilità della camera
         String sqlUpdateCamera = "UPDATE camere SET disponibilita = true WHERE id = ?";
         jdbcTemplate.update(sqlUpdateCamera, cameraId);
     }

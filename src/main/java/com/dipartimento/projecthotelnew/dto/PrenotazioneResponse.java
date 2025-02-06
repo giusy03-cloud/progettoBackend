@@ -5,13 +5,11 @@ public class PrenotazioneResponse {
     private String message;
     private boolean success;
 
-    // Costruttore
     public PrenotazioneResponse(String message, boolean success) {
         this.message = message;
         this.success = success;
     }
 
-    // Getters e Setters
     public String getMessage() {
         return message;
     }

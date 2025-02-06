@@ -1,11 +1,11 @@
 package com.dipartimento.projecthotelnew.dto;
 
 public class LoginResponse {
-    private String message;  // Messaggio di successo o errore
-    private String username; // Username dell'utente
-    private String role;     // Ruolo dell'utente
+    private String message;
+    private String username;
+    private String role;
     private Integer userId;
-    // Costruttore per inizializzare la risposta con il messaggio e i dati dell'utente
+
     public LoginResponse(String message, String username, String role, Integer userId) {
         this.message = message;
         this.username = username;
@@ -13,17 +13,15 @@ public class LoginResponse {
         this.userId=userId;
     }
 
-    // Getter per il messaggio
     public String getMessage() {
         return message;
     }
 
-    // Getter per l'username
     public String getUsername() {
         return username;
     }
 
-    // Getter per il ruolo
+
     public String getRole() {
         return role;
     }

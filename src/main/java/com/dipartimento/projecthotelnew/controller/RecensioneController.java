@@ -25,29 +25,26 @@ public class RecensioneController {
     @PostMapping("/aggiungi")
     public ResponseEntity<ResponseMessage> aggiungiRecensione(@RequestBody Recensione recensione) {
         try {
-            // Recupera l'utente in base al nome utente
+
             User user = userService.findByUsername(recensione.getNomeUtente());
 
-            // Se l'utente esiste, associa l'userId alla recensione
             if (user != null) {
-                recensione.setUserId(user.getId()); // Imposta l'userId basato sul nome utente
-                recensioneService.addRecensione(recensione); // Salva la recensione
-                // Restituisci una risposta JSON di successo
+                recensione.setUserId(user.getId());
+                recensioneService.addRecensione(recensione);
                 return ResponseEntity.ok(new ResponseMessage("Recensione aggiunta con successo!"));
             } else {
-                // Restituisci una risposta JSON con errore se l'utente non è trovato
+
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(new ResponseMessage("Errore: utente non trovato!"));
             }
         } catch (Exception e) {
-            // Gestisci gli errori e restituisci una risposta JSON con un messaggio di errore
+
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ResponseMessage("Errore nell'aggiunta della recensione: " + e.getMessage()));
         }
     }
 
 
-    // Ottieni tutte le recensioni
     @GetMapping("/all")
     public ResponseEntity<List<Recensione>> getAllRecensioni() {
         List<Recensione> recensioni = recensioneService.getAllRecensioni();

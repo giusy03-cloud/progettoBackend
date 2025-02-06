@@ -4,14 +4,14 @@ package com.dipartimento.projecthotelnew.model;
 public class Camera {
 
 
-    private Integer id;  // ID della camera, generato automaticamente da SERIAL
+    private Integer id;
 
     private String nome;
     private String tipo;
     private Double prezzo;
     private Boolean disponibilita;
 
-    // Getters and Setters
+
     public Integer getId() {
         return id;
     }
