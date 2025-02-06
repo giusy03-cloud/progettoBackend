@@ -18,9 +18,18 @@ public class CameraDAOImpl implements CameraDAO {
 
     @Override
     public Camera getCameraById(Integer id) {
-        String sql = "SELECT * FROM camere WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Camera.class), id);
+        try {
+            String sql = "SELECT * FROM camere WHERE id = ?";
+            Camera camera = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Camera.class), id);
+            System.out.println("Camera trovata: " + camera.getId() + " Disponibilità: " + camera.isDisponibilita());
+            return camera;
+        } catch (Exception e) {
+            System.out.println("Errore nel recupero della camera con ID: " + id);
+            return null;
+        }
     }
+
+
 
     @Override
     public List<Camera> getAllCamere() {
@@ -28,11 +37,15 @@ public class CameraDAOImpl implements CameraDAO {
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Camera.class));
     }
 
+
     @Override
     public void saveCamera(Camera camera) {
-        String sql = "INSERT INTO camere (nome, tipo, prezzo, disponibilita) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, camera.getNome(), camera.getTipo(), camera.getPrezzo(), camera.getDisponibilita());
+        System.out.println("Aggiornamento camera ID: " + camera.getId() + " Disponibilità: " + camera.isDisponibilita());
+        String sql = "UPDATE camere SET disponibilita = ? WHERE id = ?";
+        jdbcTemplate.update(sql, camera.isDisponibilita(), camera.getId());
     }
+
+
 
     @Override
     public boolean updateDisponibilita(Integer cameraId, Boolean disponibilita) {
@@ -42,6 +55,7 @@ public class CameraDAOImpl implements CameraDAO {
         // Restituisci true se è stato aggiornato almeno un record, altrimenti false
         return rowsUpdated > 0;
     }
+
 
 
 }

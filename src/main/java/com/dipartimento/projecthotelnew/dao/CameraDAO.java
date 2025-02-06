@@ -14,4 +14,5 @@ public interface CameraDAO {
 
     boolean updateDisponibilita(Integer cameraId, Boolean disponibilita);
 
+
 }

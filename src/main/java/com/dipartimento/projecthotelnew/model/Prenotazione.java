@@ -9,6 +9,21 @@ public class Prenotazione {
     private Integer cameraId;
     private String nomeUtente;
 
+    public Prenotazione(Integer userId, Integer cameraId, String nomeUtente) {
+        this.userId = userId;
+        this.cameraId = cameraId;
+        this.nomeUtente = nomeUtente;
+    }
+
+    @Override
+    public String toString() {
+        return "Prenotazione{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", cameraId=" + cameraId +
+                ", nomeUtente='" + nomeUtente + '\'' +
+                '}';
+    }
     // Getters and Setters
     public Integer getId() {
         return id;
