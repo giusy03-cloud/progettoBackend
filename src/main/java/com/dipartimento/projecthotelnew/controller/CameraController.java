@@ -15,17 +15,28 @@ import java.util.List;
 @RequestMapping("/api/camere")
 public class CameraController {
 
+    //QUESTA LASSE GESTISCE LE OPERAZIONI CRUD SULLE CAMERE D'ALBERGO E LA LOGICA
+    //RELATIVA ALLA DISPONIBILITA' E PRENOTAZIONE
+
+
+    //AUTOWIRED E' UN'ANNOTAZIONE DI SPRING UTILIZZATA PER ABILITARE
+    //L'INJECTION DELLE DIPENDENZE--> E' UN PRINCIPIO DI PROGRAMMAZIONE CHE PERMETTE
+    //DI FORNIRE OGGETTI O COMPONENTI A UNA CLASSE.
+    //L'ANNOTAZIONE @AUTOWIRED DICE A SPRING DI CERCA UN'ISTANZA DI UNA CLASSE
+    //COMPATIBILE CON IL TIPO DELLA DIPENDENZA RICHIESTA E DI INIETTARLA AUTOMATICAMENTE NELLA CLASSE IN CUI E' USATA
     @Autowired
     private CameraService cameraService;
 
     @GetMapping
     public ResponseEntity<List<Camera>> getAllCamere() {
+        //RECUPERA TUTTE LE CAMERE DISPONIBILI
         List<Camera> camere = cameraService.getAllCamere();
         return ResponseEntity.ok(camere);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Camera> getCameraById(@PathVariable Integer id) {
+        //RECUPERA UNA CAMERA TRAMITE ID
         Camera camera = cameraService.getCameraById(id);
         if (camera == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -35,6 +46,7 @@ public class CameraController {
 
     @PostMapping("/disponibilita/{id}")
     public ResponseEntity<String> updateDisponibilita(@PathVariable Integer id, @RequestBody Boolean disponibilita) {
+        //AGGIORNA LA DISPONIBILITA' DI UNA CAMERA SPECIFICA
         boolean updated = cameraService.updateDisponibilita(id, disponibilita);
         if (updated) {
             return ResponseEntity.ok("Disponibilità aggiornata con successo");
@@ -46,9 +58,11 @@ public class CameraController {
 
     @PostMapping("/prenota")
     public ResponseEntity<String> prenotaCamera(@RequestBody Prenotazione prenotazione) {
+        //EFFETTUA UNA PRENOTAZIONE SE LA CAMERA E' DISPONIBILE
         Camera camera = cameraService.getCameraById(prenotazione.getCameraId());
         if (camera != null && camera.isDisponibilita()) {
             camera.setDisponibilita(false);
+            //AGGIORNA LA CAMERA COME NON DISPONIBILE
             cameraService.saveCamera(camera);
             return ResponseEntity.ok("Prenotazione riuscita");
         } else {
@@ -60,6 +74,7 @@ public class CameraController {
 
     @PostMapping("/resetDisponibilita")
     public ResponseEntity<String> resetDisponibilita(@RequestBody DisponibilitaRequest request) {
+        //RESETTA LA DISPONIBILITA' DELLE CAMERE SPECIFICATE NELLA RICHIESTA
         boolean success = cameraService.resetDisponibilita(request.getCameraId(), request.getDisponibilita());
         if (success) {
             return ResponseEntity.ok("{\"message\": \"Disponibilità aggiornata con successo\"}");

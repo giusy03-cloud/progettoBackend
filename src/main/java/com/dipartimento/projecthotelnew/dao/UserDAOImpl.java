@@ -15,15 +15,17 @@ public class UserDAOImpl implements UserDAO{
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    @Override
+
+
     public void save(User user) {
-        if(!checkEndsWith(user.getUsername())&& user.getRole()=="admin"){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username non valido per un admin");
+        if(user.getRole()=="admin"){
+            if(!checkEndsWith(user.getUsername())){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username non valido per un admin");
+            }
         }
         String sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
 
-        jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getRole());
-    }
+        jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getRole());}
 
     private boolean checkEndsWith(String username) {
         String[] parts = username.split("@");

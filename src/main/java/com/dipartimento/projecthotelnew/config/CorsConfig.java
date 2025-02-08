@@ -13,11 +13,11 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:4200")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*")
-                        .allowCredentials(true);
+                registry.addMapping("/**") //consente di richieste CORS su tutti i percorsi
+                        .allowedOrigins("http://localhost:4200") //permtte richieste solo da questo dominio
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") //metodi consentiti
+                        .allowedHeaders("*") //
+                        .allowCredentials(true); //consente di includere cookie/autenticazione
             }
         };
     }

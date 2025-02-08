@@ -24,6 +24,7 @@ public class RecensioneController {
 
     @PostMapping("/aggiungi")
     public ResponseEntity<ResponseMessage> aggiungiRecensione(@RequestBody Recensione recensione) {
+        //AGGIUNGE UNA RECENSIONE PER UN UTENTE SPECIFICO
         try {
 
             User user = userService.findByUsername(recensione.getNomeUtente());
@@ -47,12 +48,14 @@ public class RecensioneController {
 
     @GetMapping("/all")
     public ResponseEntity<List<Recensione>> getAllRecensioni() {
+        //RECUPERA TUTTE LE RECENSIONI
         List<Recensione> recensioni = recensioneService.getAllRecensioni();
         return new ResponseEntity<>(recensioni, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<ResponseMessage> deleteRecensione(@PathVariable int id) {
+        //ELIMINA UNA RECENSIONE TRAMITE ID
         try {
             recensioneService.deleteRecensione(id);
             return ResponseEntity.ok(new ResponseMessage("Recensione eliminata con successo"));
