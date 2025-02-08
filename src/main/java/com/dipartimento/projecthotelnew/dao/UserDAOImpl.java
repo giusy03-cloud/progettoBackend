@@ -2,9 +2,11 @@ package com.dipartimento.projecthotelnew.dao;
 
 import com.dipartimento.projecthotelnew.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -13,12 +15,22 @@ public class UserDAOImpl implements UserDAO{
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
     @Override
     public void save(User user) {
+        if(!checkEndsWith(user.getUsername())&& user.getRole()=="admin"){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username non valido per un admin");
+        }
         String sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+
         jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getRole());
     }
+
+    private boolean checkEndsWith(String username) {
+        String[] parts = username.split("@");
+        String admin = parts[1];
+        if(admin.equals("admin")) return true;
+        return false;
+}
 
     @Override
     public User findById(int id) {
