@@ -1,5 +1,7 @@
 package com.dipartimento.projecthotelnew.dto;
 
+
+//RAPPRESENTA LA RISPOSTA DEL SERVER A UN'OPERAZIONE DI PRENOTAZIONE
 public class PrenotazioneResponse {
 
     private String message;

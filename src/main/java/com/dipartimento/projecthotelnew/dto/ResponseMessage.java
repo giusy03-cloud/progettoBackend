@@ -1,6 +1,6 @@
 package com.dipartimento.projecthotelnew.dto;
 
-
+//RESTITUISCE UN MESSAGGIO DI RISPOSTA
 public class ResponseMessage {
     private String message;
 

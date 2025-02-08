@@ -1,10 +1,12 @@
 package com.dipartimento.projecthotelnew.dto;
 
+
+//QUESTO DTO RAPPRESENTA LA RISPOSTA INVIATA DAL SERVER QUANDO UN UTENTE TENTA DI EFFETTUARE IL LOGIN
 public class LoginResponse {
-    private String message;
-    private String username;
-    private String role;
-    private Integer userId;
+    private String message;  // Messaggio di successo o errore
+    private String username; // Nome dell'utente che ha effettuato il login
+    private String role;  // Ruolo dell'utente (ad esempio, "admin" o "user")
+    private Integer userId; // ID dell'utente
 
     public LoginResponse(String message, String username, String role, Integer userId) {
         this.message = message;

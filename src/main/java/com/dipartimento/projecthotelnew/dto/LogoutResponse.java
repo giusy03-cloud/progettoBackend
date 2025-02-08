@@ -1,5 +1,7 @@
 package com.dipartimento.projecthotelnew.dto;
 
+
+//RAPPRESENTA LA RISPOSTA DEL SERVER PER IL LOGOUT
 public class LogoutResponse {
     private String message;  // Messaggio di successo o errore
 

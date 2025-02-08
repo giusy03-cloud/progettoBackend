@@ -16,19 +16,24 @@ public class UserService {
     @Autowired
     private UserDAO userDAO;
 
-
+    // Metodo per registrare un nuovo utente nel sistema
     public void register(User user){
-        userDAO.save(user);
+        userDAO.save(user); // Salva l'utente nel database tramite il DAO
     }
+    // Metodo per ottenere tutti gli utenti presenti nel sistema
     public List<User> getAllUsers(){
-        return userDAO.findAll();
+        return userDAO.findAll(); // Recupera tutti gli utenti dal database tramite il DAO
     }
+    // Metodo per eliminare un utente specificato tramite il suo ID
     public void deleteUser(int id){
-        userDAO.deleteById(id);
+        userDAO.deleteById(id);  // Elimina l'utente dal database tramite il DAO
     }
+
+    // Metodo per ottenere un utente specifico tramite il suo ID
     public User getUserById(int id){
-        return userDAO.findById(id);
+        return userDAO.findById(id);  // Recupera l'utente dal database utilizzando il suo ID
     }
+    // Metodo per cercare un utente tramite il suo nome utente
     public User findByUsername(String username){
         return userDAO.findByUsername(username);
     }

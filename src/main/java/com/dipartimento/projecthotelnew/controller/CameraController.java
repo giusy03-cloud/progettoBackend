@@ -11,7 +11,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//SI USA PER DEFINIRE UNA CLASSE COME CONTROLLER CHE GESTISCE LE TICHIESTE HTTP IN UN'APPLICAZIONE WEB RESTful
+//INDICA CHE LA CLASSE E' UN CONTROLLER E TUTTE LE RISPOSTE ALLE RICHIESTE HTTP
+//SARANNO AUTOMATICAMENTE SCRITTE NEL CORPO DELLA RICHIESTA (IN QUESTO CASO IN FORMATO JSON)
+//I JSON SONO UN FORMATO DI DATI, E' UN FORMATO DI SERIALIZZAZIONE DEI DATI,
+//CHE PERMETTE DI RAPPRESENTARE OGGETTI,ARRAY,STRINGHE,NUMERI,VALORI BOOLEANI E NULL
+//UN FILE JSON E'COMPOSTO DA UNA COPPIA CHIAVE-VALORE, DOVE LA CHIAVE E' UNA STRINGA E IL VALORE PUO' ESSERE
+//DI DIVERSI TIPI COME STRINGA,NUMERO,OGGETTO
 @RestController
+//DEFINISCE URL BASE PER TUTTE LE RICHIESTE HTTP GESTITE DA UNA CLASSE
 @RequestMapping("/api/camere")
 public class CameraController {
 
@@ -27,6 +35,8 @@ public class CameraController {
     @Autowired
     private CameraService cameraService;
 
+
+    //SERVE PER GESTIRE LE RICHIESTE GET, CHE VENGONO UTILIZZATE PER RECUPERARE INFORMAZIONI DA UN SERVER
     @GetMapping
     public ResponseEntity<List<Camera>> getAllCamere() {
         //RECUPERA TUTTE LE CAMERE DISPONIBILI
@@ -44,6 +54,7 @@ public class CameraController {
         return ResponseEntity.ok(camera);
     }
 
+    //VIENE UTILIZZATO PER INVIARE DATI AL SERVER
     @PostMapping("/disponibilita/{id}")
     public ResponseEntity<String> updateDisponibilita(@PathVariable Integer id, @RequestBody Boolean disponibilita) {
         //AGGIORNA LA DISPONIBILITA' DI UNA CAMERA SPECIFICA

@@ -1,5 +1,7 @@
 package com.dipartimento.projecthotelnew.dto;
 
+
+//FORNISCE I DETTAGLI DI UNA PRENOTAZIONE
 public class PrenotazioneDettaglioResponse {
 
     private Integer id;         // ID della prenotazione

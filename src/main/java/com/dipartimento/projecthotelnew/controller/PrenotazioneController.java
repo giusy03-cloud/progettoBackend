@@ -47,6 +47,7 @@ public class PrenotazioneController {
         }
     }
 
+    //DELETE VIENE UTILIZZATA PER ELIMINARE RISORSE DAL SERVER
     @DeleteMapping("/{id}")
     public ResponseEntity<PrenotazioneResponse> deletePrenotazione(@PathVariable Integer id) {
         //ELIMINA UNA PRENOTAZIONE

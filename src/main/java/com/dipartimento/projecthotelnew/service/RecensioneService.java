@@ -14,21 +14,23 @@ public class RecensioneService {
     private RecensioneDAO recensioneDAO;
 
 
+    // Metodo per aggiungere una nuova recensione
     public void addRecensione(Recensione recensione) {
         recensioneDAO.addRecensione(recensione);
     }
 
+    // Metodo per ottenere tutte le recensioni
 
     public List<Recensione> getAllRecensioni() {
         return recensioneDAO.getAllRecensioni();
     }
 
-
+    // Metodo per ottenere tutte le recensioni di un utente specifico
     public List<Recensione> getRecensioniByUserId(int userId) {
         return recensioneDAO.getRecensioniByUserId(userId);
     }
 
-
+    // Metodo per eliminare una recensione specifica
     public void deleteRecensione(int id) {
         recensioneDAO.deleteRecensione(id);
     }
