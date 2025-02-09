@@ -53,6 +53,7 @@ public class PrenotazioneController {
         //ELIMINA UNA PRENOTAZIONE
         PrenotazioneResponse response = prenotazioneService.deletePrenotazioneById(id);
         if (response.isSuccess()) {
+
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);

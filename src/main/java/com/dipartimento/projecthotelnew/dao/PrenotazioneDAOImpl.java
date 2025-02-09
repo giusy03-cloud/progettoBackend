@@ -2,7 +2,6 @@ package com.dipartimento.projecthotelnew.dao;
 
 import com.dipartimento.projecthotelnew.dto.PrenotazioneDettaglioResponse;
 import com.dipartimento.projecthotelnew.model.Prenotazione;
-import com.dipartimento.projecthotelnew.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
@@ -100,4 +99,18 @@ public Prenotazione findByCameraIdAndUserId(Integer cameraId, Integer userId) {
         String sqlUpdateCamera = "UPDATE camere SET disponibilita = true WHERE id = ?";
         jdbcTemplate.update(sqlUpdateCamera, cameraId);
     }
+
+
+    public void deletePrenotazioneByUserID(int id) {
+        for(int idPrenotazione: getPrenotazioniByUser(id)){
+            deletePrenotazione(idPrenotazione);
+        }
+    }
+
+    public List<Integer> getPrenotazioniByUser(int userId) {
+        String sql = "SELECT id FROM prenotazioni WHERE userid = ?";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> rs.getInt("id"), userId);
+    }
+
+
 }
