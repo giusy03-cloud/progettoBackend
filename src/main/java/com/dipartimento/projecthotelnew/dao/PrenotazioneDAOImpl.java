@@ -2,7 +2,10 @@ package com.dipartimento.projecthotelnew.dao;
 
 import com.dipartimento.projecthotelnew.dto.PrenotazioneDettaglioResponse;
 import com.dipartimento.projecthotelnew.model.Prenotazione;
+import com.dipartimento.projecthotelnew.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -60,6 +63,26 @@ public class PrenotazioneDAOImpl implements PrenotazioneDAO {
 
 
     }
+
+public Prenotazione findByCameraIdAndUserId(Integer cameraId, Integer userId) {
+    System.out.println("📢 Metodo findByCameraIdAndUserId chiamato con cameraId=" + cameraId + ", userId=" + userId);
+    String sql = "SELECT * FROM prenotazioni WHERE cameraid = ? AND userid = ?";
+    System.out.println("📌 Query eseguita: " + sql);
+    try {
+        Prenotazione prenotazione = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Prenotazione.class), cameraId, userId);
+        System.out.println("Risultato della query: " + prenotazione);
+        return prenotazione;
+    } catch (EmptyResultDataAccessException e) {
+        System.out.println("📌 Nessun risultato trovato per cameraId=" + cameraId + " e userId=" + userId);
+        return null;
+    } catch (IncorrectResultSizeDataAccessException e) {
+        System.out.println("📌 Più di un risultato trovato per cameraId=" + cameraId + " e userId=" + userId);
+        return null;
+    } catch (Exception e) {
+        System.out.println("📌 Errore durante l'esecuzione della query: " + e.getMessage());
+        return null;
+    }
+}
 
     // Elimina una prenotazione e ripristina la disponibilità della camera
     @Transactional

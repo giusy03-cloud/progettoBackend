@@ -85,11 +85,18 @@ public class CameraController {
 
     @PostMapping("/resetDisponibilita")
     public ResponseEntity<String> resetDisponibilita(@RequestBody DisponibilitaRequest request) {
-        //RESETTA LA DISPONIBILITA' DELLE CAMERE SPECIFICATE NELLA RICHIESTA
-        boolean success = cameraService.resetDisponibilita(request.getCameraId(), request.getDisponibilita());
-        if (success) {
-            return ResponseEntity.ok("{\"message\": \"Disponibilità aggiornata con successo\"}");
-        } else {
+            System.out.println("📢 Utente loggato ricevuto: " + request.getUtenteLoggato());
+        try {
+            // Verifica se l'utente ha effettuato la prenotazione e aggiorna la disponibilità
+            boolean success = cameraService.resetDisponibilita(request.getCameraId(), request.getDisponibilita(), request.getUtenteLoggato());
+
+            if (success) {
+                return ResponseEntity.ok("{\"message\": \"Disponibilità aggiornata con successo\"}");
+            } else {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body("{\"message\": \"Non hai il permesso di modificare la disponibilità di questa camera\"}");
+            }
+        } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\": \"Errore nel ripristino della disponibilità della camera\"}");
         }

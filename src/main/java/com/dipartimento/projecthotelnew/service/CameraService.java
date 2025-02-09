@@ -1,12 +1,15 @@
 package com.dipartimento.projecthotelnew.service;
 
 import com.dipartimento.projecthotelnew.dao.CameraDAO;
+import com.dipartimento.projecthotelnew.dao.PrenotazioneDAOImpl;
 import com.dipartimento.projecthotelnew.model.Camera;
+import com.dipartimento.projecthotelnew.model.Prenotazione;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
-
 
 //L'ANNOTAZIONE @SERVICE INDICA CHE LA CLASSE E' UN SERVIZIO,I SERVIZI SONO CLASSI CHE
 //CONTENGONO LA LOGICA DI BUSINESS DELL'APPLICAZIONE E SONO USATE PER INTERAGIRE CON I DATI
@@ -19,6 +22,8 @@ public class CameraService {
     //MANIPOLARE I DATI RELATIVI ALLE CAMERE
     @Autowired
     private CameraDAO cameraDAO;
+    @Autowired
+    private PrenotazioneDAOImpl prenotazioneDAOImpl;
 
     //RECUPERO TUTTE LE CAMERE NEL DB
     public List<Camera> getAllCamere() {
@@ -54,9 +59,24 @@ public class CameraService {
         return false;
     }
 
+    @Transactional
     //RESETTO LA DISPONIBILITA' DELLA CAMERA
-    public boolean resetDisponibilita(Integer cameraId, Boolean disponibilita) {
+    public boolean resetDisponibilita(Integer cameraId, Boolean disponibilita, Integer utenteLoggato) {
+        //Verifica se l'utente ha prenotato questa stanza
+        Prenotazione prenotazione = prenotazioneDAOImpl.findByCameraIdAndUserId(cameraId, utenteLoggato);
+        if (prenotazione == null) {
+            System.out.println("Nessuna prenotazione trovata per la camera ID " + cameraId + " e l'utente ID " + utenteLoggato);
+        } else {
+            System.out.println("Prenotazione trovata: " + prenotazione);
+        }
 
+        // Se l'utente non ha prenotato la stanza, non può modificarne la disponibilità
+        if (prenotazione == null) {
+            // Puoi lanciare una RuntimeException o restituire un booleano per informare l'utente
+            throw new RuntimeException("Non puoi modificare la disponibilità di una camera che non hai prenotato!");
+        }
+        prenotazioneDAOImpl.deletePrenotazione(prenotazione.getId());
+        // Se la prenotazione esiste, aggiorna la disponibilità della camera
         return cameraDAO.updateDisponibilita(cameraId, disponibilita);
     }
 

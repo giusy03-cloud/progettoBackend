@@ -17,7 +17,10 @@ public class CameraDAOImpl implements CameraDAO {
     public CameraDAOImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-
+    public static Camera getCamera(Integer cameraId) {
+        CameraDAOImpl cameraDAO = new CameraDAOImpl(new JdbcTemplate());
+        return cameraDAO.getCamera(cameraId);
+    }
     // Implementazione del metodo per ottenere una camera per ID
     @Override
     public Camera getCameraById(Integer id) {

@@ -9,6 +9,10 @@ public class Prenotazione {
     private Integer cameraId;
     private String nomeUtente;
 
+    public Prenotazione() {
+
+    }
+
     public Prenotazione(Integer userId, Integer cameraId, String nomeUtente) {
         this.userId = userId;
         this.cameraId = cameraId;
